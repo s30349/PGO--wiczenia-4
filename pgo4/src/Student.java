@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Student {
     public String imie;
     public String nazwisko;
-    public int indexNumber;
+    public String indexNumber;
     public String email;
     public String adres;
 
@@ -11,16 +11,25 @@ public class Student {
 
     public ArrayList<Double>oceny;
     public double calculateAvarage(){
-        double avg=0;
-        for(int i=0; i<oceny.size();i++){
-            avg+=oceny.get(i);
+        if (oceny.isEmpty()) {
+            throw new IllegalArgumentException("Student nie ma żadnej oceny");
         }
-        avg/=oceny.size();
+        double avg = 0;
+        for (double ocena : oceny) {
+            avg += ocena;
+        }
+        avg /= oceny.size();
 
-        if (oceny.isEmpty()){
-            throw new IllegalArgumentException("Student nie ma zadnej oceny");
+        double[] zaokraglonaListaWartosci = {2, 2.5, 3, 3.5, 4, 4.5, 5};
+        double najblizszaWartosc = zaokraglonaListaWartosci[0];
+        for (double value : zaokraglonaListaWartosci) {
+            if (Math.abs(avg - value) < Math.abs(avg - najblizszaWartosc)) {
+                najblizszaWartosc = value;
+            }
+        }
+        avg = najblizszaWartosc;
 
-        }return avg;
+        return avg;
     }
 }
 
